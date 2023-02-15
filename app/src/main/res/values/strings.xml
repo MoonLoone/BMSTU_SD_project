@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BMSTU_project</string>
+    <string name="hello_text">Hello from test bmstu project</string>
+    <string name="decoded_hint">Decoded text:</string>
+    <string name="encoded_hint">Encoded text:</string>
+    <string name="encrypthint">Encrypt</string>
 </resources>

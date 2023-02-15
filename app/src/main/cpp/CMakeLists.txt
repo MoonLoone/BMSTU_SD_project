@@ -17,21 +17,23 @@ project("bmstu_project")
 # Gradle automatically packages shared libraries with your APK.
 
 
-add_library(
-        bmstu_project
-        SHARED
-        native-lib.cpp)
+add_library(bmstu_project SHARED native-lib.cpp)
 add_library(spdlog STATIC IMPORTED)
+add_library(mbedcrypto SHARED IMPORTED)
+
 set_target_properties(spdlog PROPERTIES IMPORTED_LOCATION
         C:/Users/mmaks/AndroidStudioProjects/project/libs/spdlog/build/x86_64/libspdlog.a)
+set_target_properties(mbedcrypto PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_CURRENT_SOURCE_DIR}/../nativeLibs/${ANDROID_ABI}/libmbedcrypto.so)
+
 target_include_directories(bmstu_project PUBLIC
-        C:/Users/mmaks/AndroidStudioProjects/project/libs/spdlog/spdlog/include)
+        C:/Users/mmaks/AndroidStudioProjects/project/libs/spdlog/spdlog/include
+        C:/Users/mmaks/AndroidStudioProjects/project/libs/mbedtls/mbedtls/include)
 
 target_link_libraries( # Specifies the target library.
         bmstu_project
         spdlog
-        # Links the target library to the log library
-        # included in the NDK.
+        mbedcrypto
         log)
 
 # Searches for a specified prebuilt library and stores the path as a
