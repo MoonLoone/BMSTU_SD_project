@@ -22,13 +22,13 @@ add_library(spdlog STATIC IMPORTED)
 add_library(mbedcrypto SHARED IMPORTED)
 
 set_target_properties(spdlog PROPERTIES IMPORTED_LOCATION
-        C:/Users/mmaks/AndroidStudioProjects/project/libs/spdlog/build/x86_64/libspdlog.a)
+        /home/moonlight/AndroidStudioProjects/project/libs/spdlog/build/x86_64/libspdlog.a)
 set_target_properties(mbedcrypto PROPERTIES IMPORTED_LOCATION
         ${CMAKE_CURRENT_SOURCE_DIR}/../nativeLibs/${ANDROID_ABI}/libmbedcrypto.so)
 
 target_include_directories(bmstu_project PUBLIC
-        C:/Users/mmaks/AndroidStudioProjects/project/libs/spdlog/spdlog/include
-        C:/Users/mmaks/AndroidStudioProjects/project/libs/mbedtls/mbedtls/include)
+        /home/moonlight/AndroidStudioProjects/project/libs/spdlog/spdlog/include
+        /home/moonlight/AndroidStudioProjects/project/libs/mbedtls/mbedtls/include)
 
 target_link_libraries( # Specifies the target library.
         bmstu_project
