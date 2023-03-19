@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.bmstu_project.databinding.ActivityPinpadBinding;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class PinpadActivity extends AppCompatActivity {
@@ -26,6 +27,21 @@ public class PinpadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPinpadBinding.inflate(getLayoutInflater());
+
+        TextView ta = binding.txtAmount;
+        String amt = String.valueOf(getIntent().getStringExtra("amount"));
+        Long f = Long.valueOf(amt);
+        DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
+        String s = df.format(f);
+        ta.setText("Сумма: " + s);
+        TextView tp = binding.txtPtc;
+
+        int pts = getIntent().getIntExtra("ptc", 0);
+        if (pts == 2)
+            tp.setText("Осталось две попытки");
+        else if (pts == 1)
+            tp.setText("Осталась одна попытка");
+
         tvPin = binding.txtPin;
         ShuffleKeys();
         binding.btnOK.setOnClickListener(new View.OnClickListener() {

@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BMSTU_project"
         tools:targetApi="31">
         <activity
+            android:name=".ThirdPart"
+            android:exported="false" />
+        <activity
             android:name=".PinpadActivity"
             android:exported="false" />
         <activity
