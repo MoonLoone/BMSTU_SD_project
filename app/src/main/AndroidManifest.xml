@@ -12,6 +12,15 @@
         android:theme="@style/Theme.BMSTU_project"
         tools:targetApi="31">
         <activity
+            android:name=".PinpadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SecondPart"
+            android:exported="false" />
+        <activity
+            android:name=".FirstPart"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

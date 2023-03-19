@@ -2,6 +2,8 @@ package com.example.bmstu_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,54 +12,57 @@ import android.widget.TextView;
 
 import com.example.bmstu_project.databinding.ActivityMainBinding;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
+
 import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
+    public static native byte[] randomBytes(int no);
     public static native int initRng();
 
-    public static native byte[] randomBytes(int no);
-
-    public static native byte[] encrypt(byte[] key, byte[] data);
-
-    public static native byte[] decrypt(byte[] key, byte[] data);
-    public native String stringFromJNI();
-
-    // Used to load the 'bmstu_project' library on application startup.
     static {
         System.loadLibrary("bmstu_project");
         System.loadLibrary("mbedcrypto");
     }
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        int res = initRng();
-        byte[] text = "Hello max".getBytes(StandardCharsets.UTF_8);
-
-        TextView tvEncoded = binding.tvEncoded;
-        TextView tvDecoded = binding.tvDecoded;
-        binding.button.setOnClickListener(new View.OnClickListener() {
+        initRng();
+        binding.firstPart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                byte[] key = randomBytes(16);
-                byte[] encryptByteArray = encrypt(key,text);
-                String encrypt = new String(encryptByteArray, StandardCharsets.UTF_8);
-                String decrypt = new String(decrypt(key, encryptByteArray), StandardCharsets.UTF_8);
-                tvEncoded.setText(encrypt);
-                tvDecoded.setText(decrypt);
+            public void onClick(View view) {
+                navigateTo(FirstPart.class);
             }
         });
+        binding.secondPart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateTo(SecondPart.class);
+            }
+        });
+        binding.thirdPart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //navigateTo();
+            }
+        });
+        binding.fourthPart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //navigateTo();
+            }
+        });
+        setContentView(binding.getRoot());
     }
 
-    /**
-     * A native method that is implemented by the 'bmstu_project' native library,
-     * which is packaged with this application.
-     */
+    public void navigateTo(Class part){
+        Intent intent = new Intent(this, part);
+        startActivity(intent);
+    }
 
 }
