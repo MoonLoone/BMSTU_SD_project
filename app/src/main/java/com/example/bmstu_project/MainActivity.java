@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         binding.fourthPart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //navigateTo();
+                navigateTo(FourthPart.class);
             }
         });
         setContentView(binding.getRoot());
