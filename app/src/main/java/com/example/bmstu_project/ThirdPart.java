@@ -35,8 +35,7 @@ public class ThirdPart extends AppCompatActivity implements TransactionEvents {
                 new Thread(()-> {
                     try {
                         byte[] trd = stringToHex("9F0206000000000100");
-                        boolean ok = transaction(trd);
-                        transactionResult(ok);
+                        transaction(trd);
                     } catch (Exception ex) {
                         Log.d("!!!", ex.getMessage());
                     }
