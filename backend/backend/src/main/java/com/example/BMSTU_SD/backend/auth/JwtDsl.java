@@ -11,7 +11,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class JwtDsl extends AbstractHttpConfigurer<JwtDsl, HttpSecurity> {
 
     private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher("/**")
+            new AntPathRequestMatcher("/api/**")
     );
 
     @Override
