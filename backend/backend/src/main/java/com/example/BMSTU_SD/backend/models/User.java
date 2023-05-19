@@ -21,6 +21,9 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     public long id;
 
+    @Transient
+    public String np;
+
     @Column(name = "login", nullable = false, unique = true)
     public String login;
 

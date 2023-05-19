@@ -5,6 +5,9 @@ import com.example.BMSTU_SD.backend.models.Country;
 import com.example.BMSTU_SD.backend.repositories.ArtistRepository;
 import com.example.BMSTU_SD.backend.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
+@CrossOrigin("")
 @RestController
 @RequestMapping("/api/v1")
 public class CountryController {
@@ -25,17 +29,16 @@ public class CountryController {
     }
 
     @GetMapping("/countries")
-    public List
-    getAllCountries() {
-        return countryRepository.findAll();
+    public Page<Country> getAllCountries(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        return countryRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.ASC, "name")));
     }
 
     @PostMapping("/countries")
     public ResponseEntity<Object> createCountry(@RequestBody Country country)
             throws Exception {
+        System.out.println(country.id);
         try {
             Country nc = countryRepository.save(country);
-            System.out.println(nc.name);
             return new ResponseEntity<Object>(nc, HttpStatus.OK);
         } catch (Exception ex) {
             String error;
@@ -46,7 +49,7 @@ public class CountryController {
             Map<String, String>
                     map = new HashMap<>();
             map.put("error", error);
-            return new ResponseEntity<Object>(map, HttpStatus.OK);
+            return ResponseEntity.ok(map);
         }
     }
 
@@ -78,6 +81,12 @@ public class CountryController {
         } else
             resp.put("deleted", Boolean.FALSE);
         return ResponseEntity.ok(resp);
+    }
+
+    @PostMapping("/deletecountries")
+    public ResponseEntity deleteCountries(@RequestBody List<Country> countries) {
+        countryRepository.deleteAll(countries);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

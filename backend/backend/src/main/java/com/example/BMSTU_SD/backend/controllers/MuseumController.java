@@ -1,9 +1,13 @@
 package com.example.BMSTU_SD.backend.controllers;
 
+import com.example.BMSTU_SD.backend.models.Country;
 import com.example.BMSTU_SD.backend.models.Museum;
 import com.example.BMSTU_SD.backend.models.User;
 import com.example.BMSTU_SD.backend.repositories.MuseumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class MuseumController {
@@ -40,9 +45,8 @@ public class MuseumController {
     }
 
     @GetMapping("/museums")
-    public List
-    getAllMuseums() {
-        return museumRepository.findAll();
-    };
+    public Page<Museum> getAllMuseums(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        return museumRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.ASC, "name")));
+    }
 
 }
