@@ -9,22 +9,22 @@ import PaginationComponent from '../PaginationComponent';
 const ArtistListComponent = props => {
 
     const [message, setMessage] = useState();
-    const [countries, setCountries] = useState([]);
-    const [selectedCountries, setSelectedCountries] = useState([]);
+    const [artists, setArtists] = useState([]);
+    const [selectedArtists, setSelectedArtists] = useState([]);
     const [show_alert, setShowAlert] = useState(false);
     const [checkedItems, setCheckedItems] = useState([]);
     const [hidden, setHidden] = useState(false);
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
-    const limit = 2;
+    const limit = 10;
 
-    const onPageChanged =cp => {
-        refreshCountries(cp - 1)
+    const onPageChanged = cp => {
+        refreshArtists(cp - 1)
     }
 
-    const setChecked = v =>  {
-        setCheckedItems(Array(countries.length).fill(v));
+    const setChecked = v => {
+        setCheckedItems(Array(artists.length).fill(v));
     }
 
     const handleCheckChange = e => {
@@ -41,9 +41,9 @@ const ArtistListComponent = props => {
         setChecked(isChecked);
     }
 
-    const deleteCountriesClicked = () => {
+    const deleteArtistsClicked = () => {
         let x = [];
-        countries.map ((t, idx) => {
+        artists.map((t, idx) => {
             if (checkedItems[idx]) {
                 x.push(t)
             }
@@ -54,52 +54,47 @@ const ArtistListComponent = props => {
             if (x.length > 1) {
                 msg = "Пожалуйста подтвердите удаление " + x.length + " стран";
             }
-            else  {
+            else {
                 msg = "Пожалуйста подтвердите удаление страны " + x[0].name;
             }
             setShowAlert(true);
-            setSelectedCountries(x);
+            setSelectedArtists(x);
             setMessage(msg);
         }
     }
 
-    const refreshCountries = cp => {
+    const refreshArtists = cp => {
         BackendService.retrieveAllArtists(cp, limit)
             .then(
                 resp => {
-                    setCountries(resp.data.content);
+                    setArtists(resp.data.content);
                     setHidden(false);
                     setTotalCount(resp.data.totalElements);
                     setPage(cp);
                 }
             )
-            .catch(()=> {
-                setHidden(true );
+            .catch(() => {
+                setHidden(true);
                 setTotalCount(0);
             })
-            .finally(()=> setChecked(false))
-        }
-    
+            .finally(() => setChecked(false))
+    }
 
-    useEffect(() => {
-        refreshCountries();
-    }, [])
-
-    const updateCountryClicked = id => {
+    const updateArtistClicked = id => {
         navigate(`/artists/${id}`)
     }
 
-    const onDelete = () =>  {
-        BackendService.deleteArtists(selectedCountries)
-        .then( () => refreshCountries())
-        .catch(()=>{})
+    const onDelete = () => {
+        BackendService.deleteArtists(selectedArtists)
+            .then(() => refreshArtists(page))
+            .catch(() => { })
     }
 
     const closeAlert = () => {
         setShowAlert(false)
     }
 
-    const addCountryClicked = () => {
+    const addArtistClicked = () => {
         navigate(`/artists/-1`)
     }
 
@@ -108,32 +103,33 @@ const ArtistListComponent = props => {
     return (
         <div className="m-4">
             <div className="row my-2">
-                <h3>Страны</h3>
+                <h3>Художники</h3>
                 <div className="btn-toolbar">
                     <div className="btn-group ms-auto">
                         <button className="btn btn-outline-secondary"
-                            onClick={addCountryClicked}>
+                            onClick={addArtistClicked}>
                             <FontAwesomeIcon icon={faPlus} />{' '}Добавить
                         </button>
                     </div>
                     <div className="btn-group ms-2">
                         <button className="btn btn-outline-secondary"
-                            onClick={deleteCountriesClicked}>
+                            onClick={deleteArtistsClicked}>
                             <FontAwesomeIcon icon={faTrash} />{' '}Удалить
                         </button>
                     </div>
                 </div>
             </div>
             <div className="row my-2 me-0">
-<PaginationComponent
-    totalRecords={totalCount}
-    pageLimit={limit}
-    pageNeighbours={1}
-    onPageChanged={onPageChanged} />
-<table className="table table-sm">
+                <PaginationComponent
+                    totalRecords={totalCount}
+                    pageLimit={limit}
+                    pageNeighbours={1}
+                    currentPage={page}
+                    onPageChanged={onPageChanged} />
+                <table className="table table-sm">
                     <thead className="thead-light">
                         <tr>
-                            <th>Название</th>
+                            <th>Имя художника</th>
                             <th>
                                 <div className="btn-toolbar pb-1">
                                     <div className="btn-group  ms-auto">
@@ -145,27 +141,27 @@ const ArtistListComponent = props => {
                     </thead>
                     <tbody>
                         {
-                            countries && countries.map((country, index) =>
-                            <tr key={country.id}>
-                                <td>{country.name}</td>
-                                <td>
-                                    <div className="btn-toolbar">
-                                        <div className="btn-group  ms-auto">
-                                            <button className="btn btn-outline-secondary btn-sm btn-toolbar"
-                                                onClick={() =>
-                                                updateCountryClicked(country.id)}>
-                                                <FontAwesomeIcon icon={faEdit} fixedWidth />
-                                            </button>
+                            artists && artists.map((country, index) =>
+                                <tr key={country.id}>
+                                    <td>{country.name}</td>
+                                    <td>
+                                        <div className="btn-toolbar">
+                                            <div className="btn-group  ms-auto">
+                                                <button className="btn btn-outline-secondary btn-sm btn-toolbar"
+                                                    onClick={() =>
+                                                        updateArtistClicked(country.id)}>
+                                                    <FontAwesomeIcon icon={faEdit} fixedWidth />
+                                                </button>
+                                            </div>
+                                            <div className="btn-group  ms-2  mt-1">
+                                                <input type="checkbox" name={index}
+                                                    checked={checkedItems.length > index ? checkedItems[index] : false}
+                                                    onChange={handleCheckChange} />
+                                            </div>
                                         </div>
-                                        <div className="btn-group  ms-2  mt-1">
-                                            <input type="checkbox" name={index}
-                                                checked={checkedItems.length> index ?  checkedItems[index] : false}
-                                                onChange={handleCheckChange}/>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        )
+                                    </td>
+                                </tr>
+                            )
                         }
                     </tbody>
                 </table>

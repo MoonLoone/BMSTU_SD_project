@@ -1,6 +1,0 @@
-const MuseumComponent = props => {
-
-}
-
-
-export default MuseumComponent;

@@ -36,7 +36,6 @@ public class CountryController {
     @PostMapping("/countries")
     public ResponseEntity<Object> createCountry(@RequestBody Country country)
             throws Exception {
-        System.out.println(country.id);
         try {
             Country nc = countryRepository.save(country);
             return new ResponseEntity<Object>(nc, HttpStatus.OK);
@@ -84,9 +83,9 @@ public class CountryController {
     }
 
     @PostMapping("/deletecountries")
-    public ResponseEntity deleteCountries(@RequestBody List<Country> countries) {
+    public ResponseEntity<HttpStatus> deleteCountries(@RequestBody List<Country> countries) {
         countryRepository.deleteAll(countries);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

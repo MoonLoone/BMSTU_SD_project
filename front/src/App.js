@@ -10,14 +10,11 @@ import SideBar from './components/SideBar';
 import { useState } from 'react';
 import CountryComponent from './components/entities/CountryComponent';
 import ArtistComponent from './components/entities/ArtistComponent';
-import PaintingComponent from './components/entities/PaintingComponent';
 import UserComponent from './components/entities/UserComponent';
 import MuseumComponent from './components/entities/MuseumComponent';
-
 import CountryListComponent from './components/entities_lists/CountryListComponent';
 import ArtistsListComponent from './components/entities_lists/ArtistsListComponent';
 import MuseumListComponent from './components/entities_lists/MuseumListComponent';
-import PaintingListComponent from './components/entities_lists/PaintingsListComponent';
 import UsersListComponent from './components/entities_lists/UsersListComponent';
 
 const ProtectedRoute = ({children}) => {
@@ -44,12 +41,10 @@ const App = props => {
                                     <Route path="artists" element={<ProtectedRoute><ArtistsListComponent/></ProtectedRoute>}/>
                                     <Route path="museums" element={<ProtectedRoute><MuseumListComponent/></ProtectedRoute>}/>
                                     <Route path="users" element={<ProtectedRoute><UsersListComponent/></ProtectedRoute>}/>
-                                    <Route path="paintings" element={<ProtectedRoute><PaintingListComponent/></ProtectedRoute>}/>
                                     <Route path="countries/:id" element={<ProtectedRoute><CountryComponent/></ProtectedRoute>}/>
                                     <Route path="artists/:id" element={<ProtectedRoute><ArtistComponent/></ProtectedRoute>}/>
                                     <Route path="museums/:id" element={<ProtectedRoute><MuseumComponent/></ProtectedRoute>}/>
                                     <Route path="users/:id" element={<ProtectedRoute><UserComponent/></ProtectedRoute>}/>
-                                    <Route path="paintings/:id" element={<ProtectedRoute><PaintingComponent /></ProtectedRoute>}/>
                                 </Routes>
                             </div>
                         </div>

@@ -50,7 +50,15 @@ public class Country {
     }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "country")
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     public List<Artist> artists = new ArrayList<Artist>();
 
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", artists=" + artists +
+                '}';
+    }
 }

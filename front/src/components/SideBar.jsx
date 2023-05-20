@@ -14,7 +14,6 @@ const SideBar = props => {
                 <Nav.Item><Nav.Link as={Link} to="/artists"><FontAwesomeIcon icon={ faAnchor } />{' '}Художники</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link as={Link} to="/museums"><FontAwesomeIcon icon={faMuseum } />{' '}Музеи</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link as={Link} to="/users"><FontAwesomeIcon icon={faUser} />{' '}Пользователи</Nav.Link></Nav.Item>
-                <Nav.Item><Nav.Link as={Link} to="/art"><FontAwesomeIcon icon={faAngry} />{' '}Картины</Nav.Link></Nav.Item>
             </Nav>
         }
         { !props.expanded &&
@@ -23,7 +22,6 @@ const SideBar = props => {
                 <Nav.Item><Nav.Link as={Link} to="/artists"><FontAwesomeIcon icon={faAnchor} size="2x" /></Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link as={Link} to="/museums"><FontAwesomeIcon icon={faMuseum} size="2x" /></Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link as={Link} to="/users"><FontAwesomeIcon icon={faUser} size="2x" /></Nav.Link></Nav.Item>
-                <Nav.Item><Nav.Link as={Link} to="/art"><FontAwesomeIcon icon={faAngry} size="2x" /></Nav.Link></Nav.Item>
             </Nav>
         }
         </>

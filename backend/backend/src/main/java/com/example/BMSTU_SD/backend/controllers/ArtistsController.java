@@ -12,11 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -43,9 +41,14 @@ public class ArtistsController {
     }
 
     @PostMapping("/deleteartists")
-    public ResponseEntity deleteArtists(@RequestBody List artists) {
-        artistRepository.deleteAll(artists);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> deleteArtists(@RequestBody List<Artist> artists) {
+        System.out.println(artists.get(0).toString());
+        List<Long> listOfIds = new ArrayList<>();
+        for (Artist artist: artists){
+            listOfIds.add(artist.id);
+        }
+        artistRepository.deleteAllById(listOfIds);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/artists")
@@ -53,18 +56,32 @@ public class ArtistsController {
         try {
             Optional<Country>
                     cc = countryRepository.findById(artist.country.id);
-            if (cc.isPresent()) {
-                artist.country = cc.get();
-            }
+            cc.ifPresent(country -> artist.country = country);
             Artist nc = artistRepository.save(artist);
             return new ResponseEntity<Object>(nc, HttpStatus.OK);
-
         }
         catch(Exception ex) {
             String error = "undefinederror";
             Map<String, String> map =  new HashMap<>();
             map.put("error", error);
+            System.out.println(error);
             return new ResponseEntity<Object> (map, HttpStatus.OK);
         }
     }
+
+    @PutMapping("/artists/{id}")
+    public ResponseEntity<Artist> updateArtist(@PathVariable(value = "id") Long artistId,
+                                                 @RequestBody Artist artist) {
+        Artist artistt = null;
+        Optional<Artist> cc = artistRepository.findById(artistId);
+        if (cc.isPresent()) {
+            artistt = cc.get();
+            artistt.name = artist.name;
+            artistRepository.save(artistt);
+            return ResponseEntity.ok(artistt);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "artist not found");
+        }
+    }
+
 }

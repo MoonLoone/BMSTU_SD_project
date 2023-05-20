@@ -1,6 +1,0 @@
-const PaintingComponent = props => {
-
-}
-
-
-export default PaintingComponent;

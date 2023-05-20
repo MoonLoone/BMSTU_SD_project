@@ -31,11 +31,7 @@ public class Museum {
     public String location;
 
     @JsonIgnore
-    @OneToMany
-    public List<Painting> paintings = new ArrayList<>();
-
-    @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "usermuseums", joinColumns = @JoinColumn(name = "museumid"),
             inverseJoinColumns = @JoinColumn(name = "userid"))
     public Set<User> users = new HashSet<>();
