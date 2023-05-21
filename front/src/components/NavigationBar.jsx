@@ -24,20 +24,20 @@ class NavigationBarClass extends React.Component {
     render() {
         return (
             <Navbar bg="light" expand="lg">
-                <button type="button"
+                <button type="button" 
+                    style={{marginLeft:'15px'}}
                     className="btn btn-outline-secondary mr-2"
                     onClick={this.props.toggleSideBar}>
                     <FontAwesomeIcon icon={faBars} />
                 </button>
-                <Navbar.Brand><FontAwesomeIcon icon={faHome} />{' '}My RPO</Navbar.Brand>
+                <Navbar.Brand><FontAwesomeIcon icon={faHome} style={{marginLeft:'15px'}} />{' '}MoonMosem</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         <Nav.Link as={Link} to="/home">Home</Nav.Link>
-                        <Nav.Link onClick={() => { this.props.history.push("/home") }} >Yet another home</Nav.Link>
+                        <Nav.Link as={Link} to="/account">{this.props.user && this.props.user.login}</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-                <Navbar.Text>{this.props.user && this.props.user.login}</Navbar.Text>
                 {this.props.user &&
                     <Nav.Link onClick={this.logout}><FontAwesomeIcon fixedWidth />{' '}Выход</Nav.Link>
                 }
@@ -61,7 +61,6 @@ class NavigationBarClass extends React.Component {
 
 const NavigationBar = props => {
     const navigate = useNavigate()
-
     return <NavigationBarClass navigate={navigate} {...props} />
 }
 

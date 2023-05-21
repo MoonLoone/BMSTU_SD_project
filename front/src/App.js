@@ -10,12 +10,12 @@ import SideBar from './components/SideBar';
 import { useState } from 'react';
 import CountryComponent from './components/entities/CountryComponent';
 import ArtistComponent from './components/entities/ArtistComponent';
-import UserComponent from './components/entities/UserComponent';
 import MuseumComponent from './components/entities/MuseumComponent';
 import CountryListComponent from './components/entities_lists/CountryListComponent';
 import ArtistsListComponent from './components/entities_lists/ArtistsListComponent';
 import MuseumListComponent from './components/entities_lists/MuseumListComponent';
 import UsersListComponent from './components/entities_lists/UsersListComponent';
+import MyAccountComponent from './components/MyAccountComponent';
 
 const ProtectedRoute = ({children}) => {
     let user = Utils.getUser();
@@ -37,6 +37,7 @@ const App = props => {
                                 <Routes>
                                     <Route path="login" element={<Login />}/>
                                     <Route path="home" element={<ProtectedRoute><Home/></ProtectedRoute>}/>
+                                    <Route path="account" element={<ProtectedRoute><MyAccountComponent/></ProtectedRoute>}/>
                                     <Route path="countries" element={<ProtectedRoute><CountryListComponent/></ProtectedRoute>}/>
                                     <Route path="artists" element={<ProtectedRoute><ArtistsListComponent/></ProtectedRoute>}/>
                                     <Route path="museums" element={<ProtectedRoute><MuseumListComponent/></ProtectedRoute>}/>
@@ -44,7 +45,6 @@ const App = props => {
                                     <Route path="countries/:id" element={<ProtectedRoute><CountryComponent/></ProtectedRoute>}/>
                                     <Route path="artists/:id" element={<ProtectedRoute><ArtistComponent/></ProtectedRoute>}/>
                                     <Route path="museums/:id" element={<ProtectedRoute><MuseumComponent/></ProtectedRoute>}/>
-                                    <Route path="users/:id" element={<ProtectedRoute><UserComponent/></ProtectedRoute>}/>
                                 </Routes>
                             </div>
                         </div>

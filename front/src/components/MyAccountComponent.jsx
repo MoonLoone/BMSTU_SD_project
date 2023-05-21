@@ -29,7 +29,7 @@ const MyAccountComponent = props => {
         if (validate(data)) {
             BackendService.updateUser(user)
                 .then(() => {
-                    navigate("users/");
+                    navigate("../users/");
                 })
                 .catch(() => {
                 })
@@ -74,7 +74,7 @@ const MyAccountComponent = props => {
                     <h3>Мой аккаунт</h3>
                     <div>
                         <button className="btn btn-outline-secondary float-end"
-                                onClick={() => navigate.goBack()}>
+                                onClick={() => navigate("/home")}>
                             <FontAwesomeIcon icon={faChevronLeft}/>{' '}Назад
                         </button>
                     </div>
@@ -116,4 +116,4 @@ const MyAccountComponent = props => {
     )
 }
 
-export default connect()(MyAccountComponent);
+export default MyAccountComponent;

@@ -1,5 +1,6 @@
 package com.example.BMSTU_SD.backend.controllers;
 
+import com.example.BMSTU_SD.backend.models.Artist;
 import com.example.BMSTU_SD.backend.models.Museum;
 import com.example.BMSTU_SD.backend.models.User;
 import com.example.BMSTU_SD.backend.repositories.MuseumRepository;
@@ -7,11 +8,13 @@ import com.example.BMSTU_SD.backend.repositories.UserRepository;
 import com.example.BMSTU_SD.backend.tools.DataValidationException;
 import com.example.BMSTU_SD.backend.tools.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -26,13 +29,12 @@ public class UserController {
     MuseumRepository museumRepository;
 
     @GetMapping("/users")
-    public List
-    getAllUsers() {
-        return userRepository.findAll();
-    };
+    public Page<User> getAllUsers(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        return userRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.ASC, "login")));
+    }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity updateUser(@PathVariable(value = "id") Long userId,
+    public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long userId,
                                      @RequestBody User userDetails)
             throws DataValidationException
     {
@@ -115,6 +117,15 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         response.put("count", String.valueOf(cnt));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUser(@PathVariable(value = "id") Long userId)
+            throws DataValidationException
+    {
+        User artist = userRepository.findById(userId)
+                .orElseThrow(()-> new DataValidationException("Пользователь с таким индексом не найден"));
+        return ResponseEntity.ok(artist);
     }
 
 }

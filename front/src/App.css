@@ -46,6 +46,7 @@
   min-height: 100vh;
   background: #ECF0F1;
   color: #ECF0F1;
+  padding-left: 18px;
 }
 
 .my-sidebar-expanded {

@@ -1,18 +1,14 @@
 import React from 'react';
+import logo from '../static/img/hello_img.jpeg';
+const Home = props => {
 
-class Home extends React.Component {
+    return (
+        <div className="mt-5 me-auto">
+            <h1>Welcome to MoonMosem</h1>
+            <img src={logo} width="80%" height="25%" />
+        </div>
+    );
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className="mt-5 me-auto">
-                <h2>RPO Art Frontend</h2>
-            </div>
-        );
-    }
 }
 
 export default Home;

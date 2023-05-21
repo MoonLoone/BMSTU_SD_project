@@ -32,7 +32,7 @@ public class ArtistsController {
     }
 
     @GetMapping("/artists/{id}")
-    public ResponseEntity getArtist(@PathVariable(value = "id") Long artistId)
+    public ResponseEntity<Artist> getArtist(@PathVariable(value = "id") Long artistId)
             throws DataValidationException
     {
         Artist artist = artistRepository.findById(artistId)
